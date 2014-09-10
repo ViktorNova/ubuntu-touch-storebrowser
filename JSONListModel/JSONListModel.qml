@@ -1,6 +1,7 @@
 /* JSONListModel - a QML ListModel with JSON and JSONPath support
  *
  * Copyright (c) 2012 Romain Pokrzywka (KDAB) (romain@kdab.com)
+ * Copyright (c) 2014 Sturm Flut (sturmflut@lieberbiber.de)
  * Licensed under the MIT licence (http://opensource.org/licenses/mit-license.php)
  */
 
