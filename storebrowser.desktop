@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Store Browser
+Exec=qmlscene $@ main.qml
+Icon=storebrowser.png
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+

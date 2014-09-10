@@ -1,0 +1,15 @@
+{
+    "architecture": "all",
+    "description": "Browse all apps in the Ubuntu Touch Store",
+    "framework": "ubuntu-sdk-14.10-dev2",
+    "hooks": {
+        "storebrowser": {
+            "apparmor": "storebrowser.apparmor",
+            "desktop": "storebrowser.desktop"
+        }
+    },
+    "maintainer": "Sturm Flut <sturmflut@lieberbiber.de>",
+    "name": "com.ubuntu.developer.sturmflut.storebrowser",
+    "title": "Store Browser",
+    "version": "0.3"
+}
