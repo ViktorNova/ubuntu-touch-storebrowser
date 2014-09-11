@@ -16,7 +16,7 @@ Item {
     property ListModel model : ListModel { id: jsonModel }
     property alias count: jsonModel.count
 
-    signal modelUpdated
+    property bool modelComplete: false
 
     onSourceChanged: {
         var xhr = new XMLHttpRequest;
@@ -43,7 +43,10 @@ Item {
             jsonModel.append( jo );
         }
 
-        modelUpdated();
+        if(modelComplete)
+            modelComplete = false
+        else
+            modelComplete = true
     }
 
     function parseJSONString(jsonString, jsonPathQuery) {

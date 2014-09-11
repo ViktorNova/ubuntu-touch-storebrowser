@@ -43,44 +43,42 @@ MainView {
                 running: true
             }
 
-                JSON.JSONListModel {
-                    id: storeJSONmodel
-                    source: "https://search.apps.ubuntu.com/api/v1/search?q=architecture:armhf&size=100000&page=1"
+            JSON.JSONListModel {
+                id: storeJSONmodel
+                source: "https://search.apps.ubuntu.com/api/v1/search?q=architecture:armhf&size=100000&page=1"
 
-                    query: "$._embedded.clickindex:package[*]"
+                query: "$._embedded.clickindex:package[*]"
 
-                    Component.onCompleted: {
-                        storeJSONmodel.modelUpdated.connect(deactivateIndicator)
-                    }
+                onModelCompleteChanged: {
+                    storeLoadIndicator.running = false
+                    storeLoadIndicator.visible = false
 
-                    function deactivateIndicator() {
-                        storeLoadIndicator.running = false
-                        storeLoadIndicator.visible = false
-                    }
-
+                    appListPage.title = i18n.tr("App list") + " (" + storeJSONmodel.count + ")"
                 }
 
-                ListView {
-                    id: appList
-                    model: storeJSONmodel.model
-                    anchors.fill: parent
+            }
 
-                    delegate: ListItem.Subtitled {
-                        text: model.title
-                        progression: true
-                        subText: "Author: " + model.publisher + "  Score: " + model.ratings_average
-                        iconSource: model.icon_url
-                        onClicked: {
-                            appDetailPage.title = model.title
-                            appJSONmodel.source = model._links.self.href
+            ListView {
+                id: appList
+                model: storeJSONmodel.model
+                anchors.fill: parent
 
-                            detailLoadIndicator.running = true
-                            detailLoadIndicator.visible = true
+                delegate: ListItem.Subtitled {
+                    text: model.title
+                    progression: true
+                    subText: "Author: " + model.publisher + "  Score: " + model.ratings_average
+                    iconSource: model.icon_url
+                    onClicked: {
+                        appDetailPage.title = model.title
+                        appJSONmodel.source = model._links.self.href
 
-                            pageStack.push(appDetailPage)
-                        }
+                        detailLoadIndicator.running = true
+                        detailLoadIndicator.visible = true
+
+                        pageStack.push(appDetailPage)
                     }
                 }
+            }
 
         }
 
@@ -93,11 +91,7 @@ MainView {
 
                 query: "$"
 
-                Component.onCompleted: {
-                    appJSONmodel.modelUpdated.connect(updateAppDetails)
-                }
-
-                function updateAppDetails() {
+                onModelCompleteChanged: {
                     if(appJSONmodel.model.count > 0)
                     {
                         detailLoadIndicator.running = false
